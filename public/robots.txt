@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /briefing
+Sitemap: https://briefing-cobem.vercel.app/sitemap-index.xml
