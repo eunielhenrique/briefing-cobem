@@ -1,0 +1,16 @@
+---
+import { linkWhatsApp } from '../data/clinica'
+interface Props { texto?: string; titulo?: string }
+const { texto = 'Agendar pelo WhatsApp', titulo } = Astro.props
+const wa = linkWhatsApp()
+---
+<div class="cta">
+  {titulo && <h2>{titulo}</h2>}
+  <a class="btn btn-zap" href={wa ?? '/contato'}>{texto}</a>
+  {!wa && <p class="nota">WhatsApp <span class="a-confirmar">[a confirmar]</span> — em breve o agendamento direto.</p>}
+</div>
+<style>
+.cta{text-align:center;padding:36px 20px;background:var(--suave);border-radius:16px;margin:24px 0}
+.cta h2{margin-top:0}
+.nota{font-size:13px;margin:10px 0 0;max-width:none}
+</style>
