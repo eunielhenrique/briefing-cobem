@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro'
+import { clinica, mostra, linkWhatsApp, isPendente } from '../data/clinica'
+const wa = linkWhatsApp()
+---
+<Base title={`Contato e agendamento | ${clinica.nome}`} description="Endereço, horários, telefone e WhatsApp da COBEM Oftalmologia.">
+  <article class="container secao">
+    <p class="eyebrow">Contato</p>
+    <h1>Agendamento e localização</h1>
+    <hr class="regua" />
+    <dl>
+      <dt>WhatsApp (agendamento)</dt>
+      <dd>{wa ? <a class="btn btn-zap" href={wa}>Chamar no WhatsApp</a> : <span class="a-confirmar">[a confirmar]</span>}</dd>
+      <dt>Telefone</dt><dd>{mostra(clinica.telefone)}</dd>
+      <dt>E-mail</dt><dd>{mostra(clinica.email)}</dd>
+      <dt>Endereço</dt><dd>{mostra(clinica.endereco)}</dd>
+      <dt>Horário de atendimento</dt><dd>{mostra(clinica.horario)}</dd>
+      <dt>Instagram</dt><dd><a href="https://www.instagram.com/cobemoftalmologia/" rel="noopener">{clinica.instagram}</a></dd>
+    </dl>
+    {isPendente(clinica.endereco)
+      ? <p class="nota">O mapa será exibido aqui quando o endereço for confirmado.</p>
+      : <iframe title="Mapa da clínica" width="100%" height="320" style="border:0;border-radius:14px" loading="lazy" src={`https://www.google.com/maps?q=${encodeURIComponent(clinica.endereco)}&output=embed`}></iframe>}
+  </article>
+</Base>
+<style>
+dt{font-weight:700;color:var(--tinta);margin-top:16px}
+dd{margin:6px 0 0}
+.nota{font-size:13px;color:var(--texto)}
+</style>
