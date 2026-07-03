@@ -5,12 +5,14 @@
  */
 export type Medico = { nome: string; crm: string; especialidade: string; bio?: string }
 
+// Dados reais abaixo (cidade, endereço, telefone, WhatsApp) vêm da bio pública
+// do Instagram @cobemoftalmologia em 2026-07-03. Briefing confirma/completa o resto.
 export const clinica = {
   nome: 'COBEM Oftalmologia',
-  cidade: '[PENDENTE: cidade]',
-  endereco: '[PENDENTE: endereço completo]',
-  whatsapp: '[PENDENTE: WhatsApp da clínica]',
-  telefone: '[PENDENTE: telefone fixo]',
+  cidade: 'São Paulo',
+  endereco: 'Rua Padre Chico, 221 — Perdizes, São Paulo/SP',
+  whatsapp: '(11) 94529-6991',
+  telefone: '(11) 2639-1096',
   email: '[PENDENTE: e-mail da clínica]',
   horario: '[PENDENTE: horário de atendimento]',
   responsavelTecnico: '[PENDENTE: RT — Dr(a). + CRM]',

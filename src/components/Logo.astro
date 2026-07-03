@@ -1,18 +1,22 @@
 ---
-// PROVISÓRIO: traçado fiel da logo enviada no chat (serifa + olho no "O").
-// Substituir pelo arquivo original (PNG/vetor) em src/assets/ quando o cliente enviar.
+// Logo oficial: foto de perfil do @cobemoftalmologia (320x320, fundo branco).
+// O recorte CSS mostra só a faixa do lettering. Se o cliente enviar o vetor
+// original, trocar o arquivo em public/logo-cobem.jpg mantendo este componente.
 interface Props { altura?: number }
 const { altura = 46 } = Astro.props
+const largura = Math.round(altura * 2.7)
 ---
-<a href="/" aria-label="COBEM Oftalmologia — início" style="display:inline-block;line-height:0">
-  <svg height={altura} viewBox="0 0 560 158" role="img" aria-label="COBEM Oftalmologia">
-    <text x="0" y="98" font-family="Georgia,'Times New Roman',serif" font-size="104" fill="#111">C</text>
-    <path d="M84,64 Q152,4 220,64" fill="none" stroke="#111" stroke-width="5" stroke-linecap="round"/>
-    <path d="M84,64 Q152,124 220,64" fill="none" stroke="#111" stroke-width="5" stroke-linecap="round"/>
-    <circle cx="152" cy="64" r="30" fill="none" stroke="#2f56a4" stroke-width="5" stroke-dasharray="132 18" stroke-dashoffset="-8"/>
-    <path d="M138,58 a15,15 0 1 0 20,-4" fill="none" stroke="#111" stroke-width="4.5" stroke-linecap="round"/>
-    <text x="228" y="98" font-family="Georgia,'Times New Roman',serif" font-size="104" fill="#111" letter-spacing="4">BEM</text>
-    <line x1="2" y1="118" x2="556" y2="118" stroke="#2f56a4" stroke-width="4"/>
-    <text x="2" y="152" font-family="Georgia,'Times New Roman',serif" font-size="25" fill="#222" letter-spacing="17.5">OFTALMOLOGIA</text>
-  </svg>
+<a href="/" aria-label="COBEM Oftalmologia — início" class="logo-link">
+  <img
+    src="/logo-cobem.jpg"
+    alt="COBEM Oftalmologia"
+    style={`height:${altura}px;width:${largura}px`}
+    width={largura}
+    height={altura}
+    loading="eager"
+  />
 </a>
+<style>
+.logo-link{display:inline-block;line-height:0}
+img{object-fit:cover;object-position:center 48%;background:#fff;border-radius:4px}
+</style>
