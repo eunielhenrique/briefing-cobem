@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro'
+import CTAWhatsApp from '../components/CTAWhatsApp.astro'
+import { exames } from '../data/exames'
+import { clinica, isPendente } from '../data/clinica'
+const cidade = isPendente(clinica.cidade) ? '' : ` em ${clinica.cidade}`
+---
+<Base title={`Exames oftalmológicos${cidade} | ${clinica.nome}`} description="OCT, campo visual, topografia, mapeamento de retina, paquimetria e biometria — exames realizados na própria clínica.">
+  <article class="container secao">
+    <p class="eyebrow">Diagnóstico</p>
+    <h1>Exames oftalmológicos</h1>
+    <hr class="regua" />
+    <p>Todos os exames abaixo são realizados na própria clínica, no mesmo local da consulta.</p>
+    <dl>
+      {exames.map((e) => (<><dt>{e.nome}</dt><dd>{e.desc}</dd></>))}
+    </dl>
+    <CTAWhatsApp titulo="Precisa de um exame? Agende pelo WhatsApp" />
+  </article>
+</Base>
+<style>
+dt{font-weight:700;color:var(--tinta);margin-top:18px;font-family:var(--serif);font-size:18px}
+dd{margin:4px 0 0}
+</style>

@@ -1,0 +1,39 @@
+---
+import Base from '../../layouts/Base.astro'
+import FAQ from '../../components/FAQ.astro'
+import CTAWhatsApp from '../../components/CTAWhatsApp.astro'
+import { servicos } from '../../data/servicos'
+import { clinica, mostra, isPendente } from '../../data/clinica'
+
+export function getStaticPaths() {
+  return servicos.map((s) => ({ params: { slug: s.slug }, props: { s } }))
+}
+const { s } = Astro.props
+const cidade = isPendente(clinica.cidade) ? '' : ` em ${clinica.cidade}`
+---
+<Base title={`${s.nome}${cidade} | ${clinica.nome}`} description={s.resumo}>
+  <article class="container secao">
+    <p class="eyebrow">Serviços · {clinica.nome}</p>
+    <h1>{s.nome}</h1>
+    <hr class="regua" />
+
+    <h2>O que é</h2>
+    <p>{s.oQueE}</p>
+
+    <h2>Sintomas e quando procurar</h2>
+    <ul>{s.sintomas.map((x) => <li>{x}</li>)}</ul>
+
+    <h2>Como funciona o tratamento na {clinica.nome}</h2>
+    <p>{s.tratamento}</p>
+
+    <FAQ faqs={s.faqs} />
+
+    <CTAWhatsApp titulo={`Agende sua avaliação de ${s.nome.toLowerCase()}`} />
+    <p class="nota">Atendimento: {mostra(clinica.horario)} · {mostra(clinica.endereco)}</p>
+  </article>
+</Base>
+<style>
+ul{padding-left:20px}
+li{margin:6px 0}
+.nota{font-size:13px}
+</style>

@@ -1,0 +1,22 @@
+---
+// Logo oficial: foto de perfil do @cobemoftalmologia (320x320, fundo branco).
+// O recorte CSS mostra só a faixa do lettering. Se o cliente enviar o vetor
+// original, trocar o arquivo em public/logo-cobem.jpg mantendo este componente.
+interface Props { altura?: number }
+const { altura = 46 } = Astro.props
+const largura = Math.round(altura * 2.7)
+---
+<a href="/" aria-label="COBEM Oftalmologia — início" class="logo-link">
+  <img
+    src="/logo-cobem.jpg"
+    alt="COBEM Oftalmologia"
+    style={`height:${altura}px;width:${largura}px`}
+    width={largura}
+    height={altura}
+    loading="eager"
+  />
+</a>
+<style>
+.logo-link{display:inline-block;line-height:0}
+img{object-fit:cover;object-position:center 48%;background:#fff;border-radius:4px}
+</style>

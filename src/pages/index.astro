@@ -1,0 +1,106 @@
+---
+import Base from '../layouts/Base.astro'
+import CardServico from '../components/CardServico.astro'
+import CTAWhatsApp from '../components/CTAWhatsApp.astro'
+import { servicos } from '../data/servicos'
+import { exames } from '../data/exames'
+import { clinica, mostra, linkWhatsApp, isPendente } from '../data/clinica'
+const wa = linkWhatsApp()
+const cidade = isPendente(clinica.cidade) ? '' : ` em ${clinica.cidade}`
+---
+<Base
+  title={`${clinica.nome} — Clínica oftalmológica${cidade}`}
+  description={`Consultas, exames e cirurgias oftalmológicas${cidade}. Agende pelo WhatsApp.`}
+>
+  <!-- Hero (direção "Herança da marca" aprovada em mockup) -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">Clínica oftalmológica{cidade}</p>
+        <h1>Cuidar da sua visão é <em>ver bem</em> a vida inteira</h1>
+        <hr class="regua" />
+        <p>Consultas, exames e cirurgias com equipe especializada e estrutura completa — do check-up de rotina à catarata e ao glaucoma.</p>
+        <div class="botoes">
+          <a class="btn btn-zap" href={wa ?? '/contato'}>Agendar pelo WhatsApp</a>
+          <a class="btn btn-sec" href="/#servicos">Conhecer a clínica</a>
+        </div>
+      </div>
+      <div class="olho" role="img" aria-label="Ilustração abstrata de um olho no azul da marca"></div>
+    </div>
+  </section>
+
+  <!-- Serviços -->
+  <section id="servicos" class="secao container">
+    <p class="eyebrow">Serviços</p>
+    <h2>Especialidades da COBEM</h2>
+    <div class="grid-cards" style="margin-top:22px">
+      {servicos.map((s) => <CardServico titulo={s.nome} resumo={s.resumo} href={`/servicos/${s.slug}`} />)}
+    </div>
+  </section>
+
+  <!-- Exames -->
+  <section class="secao faixa">
+    <div class="container">
+      <p class="eyebrow">Diagnóstico</p>
+      <h2>Exames realizados na clínica</h2>
+      <ul class="lista-exames">
+        {exames.map((e) => <li><strong>{e.nome}</strong> — {e.desc}</li>)}
+      </ul>
+      <a href="/exames">Ver todos os exames →</a>
+    </div>
+  </section>
+
+  <!-- Equipe (resumo) -->
+  <section class="secao container">
+    <p class="eyebrow">Equipe</p>
+    <h2>Corpo clínico</h2>
+    {clinica.medicos.length === 0
+      ? <p>Equipe em atualização — os perfis completos dos médicos serão publicados em breve. Responsável técnico: <span class="a-confirmar">[a confirmar]</span>.</p>
+      : <p>{clinica.medicos.length} especialistas à disposição. <a href="/equipe">Conheça a equipe →</a></p>}
+  </section>
+
+  <!-- Convênios -->
+  <section class="secao faixa">
+    <div class="container">
+      <p class="eyebrow">Convênios</p>
+      <h2>Planos e formas de atendimento</h2>
+      {clinica.convenios.length === 0
+        ? <p>Lista de convênios aceitos <span class="a-confirmar">[a confirmar]</span> — consulte pelo WhatsApp.</p>
+        : <p>{clinica.convenios.join(' · ')}</p>}
+    </div>
+  </section>
+
+  <!-- Depoimentos: só renderiza com depoimento REAL (regra: mock nunca se apresenta como real) -->
+  {clinica.depoimentos.length > 0 && (
+    <section class="secao container">
+      <p class="eyebrow">Depoimentos</p>
+      <h2>Quem já se consultou</h2>
+      {clinica.depoimentos.map((d) => <blockquote>"{d.texto}" — {d.autor}</blockquote>)}
+    </section>
+  )}
+
+  <!-- Localização + CTA final -->
+  <section class="secao container">
+    <p class="eyebrow">Onde estamos</p>
+    <h2>Localização e horários</h2>
+    <p>{mostra(clinica.endereco)}<br />{mostra(clinica.horario)}</p>
+    <CTAWhatsApp titulo="Pronto para cuidar da sua visão?" />
+  </section>
+</Base>
+
+<style>
+.hero{padding:64px 0 72px;border-bottom:1px solid var(--linha)}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:32px;align-items:center}
+@media(max-width:720px){.hero-grid{grid-template-columns:1fr}}
+.hero h1 em{font-style:italic;color:var(--brand)}
+.botoes{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+.olho{width:100%;aspect-ratio:1.1;border-radius:16px;border:1px solid var(--linha);background:
+  radial-gradient(circle at 50% 50%, #10151d 0 11%, #fff 12% 13.5%, var(--brand) 14% 24%, var(--fundo) 25% 27%, #10151d 27.5% 29%, transparent 29.5%),
+  radial-gradient(ellipse 78% 46% at 50% 50%, transparent 0 62%, #10151d 62.5% 64%, transparent 64.5%),
+  radial-gradient(circle at 65% 38%, rgba(47,86,164,.16) 0 7%, transparent 8%),
+  linear-gradient(155deg,#f6f8fb,#eef2f8)}
+.faixa{background:var(--suave)}
+.lista-exames{padding-left:20px}
+.lista-exames li{margin:8px 0}
+blockquote{border-left:3px solid var(--brand);margin:14px 0;padding:4px 16px;font-style:italic}
+</style>

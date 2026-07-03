@@ -1,0 +1,64 @@
+---
+import '../styles/global.css'
+import Logo from '../components/Logo.astro'
+import { clinica, linkWhatsApp, jsonLdClinica, mostra } from '../data/clinica'
+interface Props { title: string; description: string }
+const { title, description } = Astro.props
+const wa = linkWhatsApp()
+const ld = jsonLdClinica()
+---
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  {ld && <script type="application/ld+json" set:html={JSON.stringify(ld)} />}
+</head>
+<body>
+  <header>
+    <div class="container barra">
+      <Logo altura={42} />
+      <nav aria-label="principal">
+        <a href="/#servicos">Serviços</a>
+        <a href="/exames">Exames</a>
+        <a href="/equipe">Equipe</a>
+        <a href="/contato">Contato</a>
+      </nav>
+      <a class="btn btn-zap" href={wa ?? '/contato'}>Agendar no WhatsApp</a>
+    </div>
+  </header>
+
+  <main><slot /></main>
+
+  <footer>
+    <div class="container rodape">
+      <Logo altura={34} />
+      <p>{mostra(clinica.endereco)} · {mostra(clinica.horario)}</p>
+      <p>Responsável técnico: {mostra(clinica.responsavelTecnico)} · {clinica.instagram}</p>
+      <p>© {new Date().getFullYear()} {clinica.nome}</p>
+    </div>
+  </footer>
+
+  <a class="zap-flutuante" href={wa ?? '/contato'} aria-label="Agendar pelo WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.9-1.2-4.7-4.1-4.9-4.3-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.5.5c-.2.2-.3.4-.1.7.2.3.8 1.4 1.8 2.2 1.2 1.1 2.3 1.4 2.6 1.6.3.1.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.6.4 0 .1 0 .7-.3 1.5Z"/></svg>
+  </a>
+</body>
+</html>
+
+<style>
+header{border-bottom:1px solid var(--linha);background:var(--fundo);position:sticky;top:0;z-index:10}
+.barra{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:14px;padding-bottom:14px;flex-wrap:wrap}
+nav{display:flex;gap:22px;font-size:14.5px}
+nav a{color:#425062;text-decoration:none}
+nav a:hover{color:var(--brand)}
+.rodape{padding:36px 20px;border-top:1px solid var(--linha);font-size:13.5px}
+.rodape p{margin:6px 0}
+.zap-flutuante{position:fixed;right:18px;bottom:18px;width:56px;height:56px;border-radius:50%;background:var(--zap);display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.22);z-index:20}
+</style>

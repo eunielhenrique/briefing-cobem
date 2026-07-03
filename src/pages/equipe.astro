@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro'
+import CTAWhatsApp from '../components/CTAWhatsApp.astro'
+import { clinica, mostra } from '../data/clinica'
+---
+<Base title={`Equipe médica | ${clinica.nome}`} description="Conheça o corpo clínico da COBEM Oftalmologia.">
+  <article class="container secao">
+    <p class="eyebrow">Equipe</p>
+    <h1>Corpo clínico</h1>
+    <hr class="regua" />
+    {clinica.medicos.length === 0 ? (
+      <p>Os perfis completos da equipe médica serão publicados em breve.</p>
+    ) : (
+      <div class="grid-cards">
+        {clinica.medicos.map((m) => (
+          <div class="medico">
+            <h3>{m.nome}</h3>
+            <p><strong>{m.crm}</strong> · {m.especialidade}</p>
+            {m.bio && <p>{m.bio}</p>}
+          </div>
+        ))}
+      </div>
+    )}
+    <p>Responsável técnico: {mostra(clinica.responsavelTecnico)}</p>
+    <CTAWhatsApp titulo="Agende com a nossa equipe" />
+  </article>
+</Base>
+<style>
+.medico{border:1px solid var(--linha);border-radius:14px;padding:20px;background:#fff}
+.medico h3{margin:0 0 6px}
+.medico p{font-size:14px;margin:4px 0}
+</style>
